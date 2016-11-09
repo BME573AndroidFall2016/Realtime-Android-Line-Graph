@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         mChart = new LineChart(this);
         mainLayout.addView(mChart);
 
-        mChart.setMinimumWidth(1200);
-        mChart.setMinimumHeight(1200);
+        mChart.setMinimumWidth(1300);
+        mChart.setMinimumHeight(1700);
 
         // customize line chart
         mChart.setDescription("");
@@ -89,14 +89,6 @@ public class MainActivity extends AppCompatActivity {
         YAxis yl2 = mChart.getAxisRight();
         yl2.setEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -153,6 +145,9 @@ public class MainActivity extends AppCompatActivity {
             // limit number of visible entries
             mChart.setVisibleXRangeMinimum(6);
 
+            // but also ACTUALLY limit number of visible entries
+            mChart.setVisibleXRangeMaximum(30);
+
             // scroll to the last entry
             mChart.moveViewToX(data.getXValCount() - 7);
         }
@@ -161,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     // method to create set
     private LineDataSet createSet() {
-        LineDataSet set = new LineDataSet(null, "SPH Db");
+        LineDataSet set = new LineDataSet(null, "Synthetic data");
         set.setDrawCubic(true);
         set.setCubicIntensity(0.2f);
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
