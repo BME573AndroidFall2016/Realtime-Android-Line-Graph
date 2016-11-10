@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
             // add a new random value
             data.addXValue("");
-            data.addEntry(new Entry((float) (Math.random() * 120) + 5f, set
+            data.addEntry(new Entry((float) (Math.random() * 110) + 5f, set
                     .getEntryCount()), 0);
 
             // notify chart data have changed
