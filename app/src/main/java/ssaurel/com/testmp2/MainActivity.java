@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout mainLayout;
     private LineChart mChart;
+    FakeDataSimple fakeData = new FakeDataSimple();
 
 
     @Override
@@ -100,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // add 100 entries
-                for (int i = 0; i < 100; i++) {
+                float len = new FakeDataSimple().getLength();
+                for (int i = 0; i < len; i++) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // pause between adds
                     try {
-                        Thread.sleep(600);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         // manage error ...
 
@@ -136,17 +138,20 @@ public class MainActivity extends AppCompatActivity {
 
             // add a new random value
             data.addXValue("");
-            data.addEntry(new Entry((float) (Math.random() * 110) + 5f, set
-                    .getEntryCount()), 0);
+//            data.addEntry(new Entry((float) (Math.random() * 110) + 5f, set
+//                    .getEntryCount()), 0);
+
+            float datum = fakeData.getData();
+            data.addEntry(new Entry((float) datum, set.getEntryCount()),0);
 
             // notify chart data have changed
             mChart.notifyDataSetChanged();
 
             // limit number of visible entries
-            mChart.setVisibleXRangeMinimum(6);
+            mChart.setVisibleXRangeMinimum(4);
 
             // but also ACTUALLY limit number of visible entries
-            mChart.setVisibleXRangeMaximum(30);
+            mChart.setVisibleXRangeMaximum(100);
 
             // scroll to the last entry
             mChart.moveViewToX(data.getXValCount() - 7);
@@ -156,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     // method to create set
     private LineDataSet createSet() {
-        LineDataSet set = new LineDataSet(null, "Synthetic data");
+        LineDataSet set = new LineDataSet(null, "Fake ECG data");
         set.setDrawCubic(true);
         set.setCubicIntensity(0.2f);
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -167,8 +172,9 @@ public class MainActivity extends AppCompatActivity {
         set.setFillAlpha(65);
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 177));
-        set.setValueTextColor(Color.BLACK);
-        set.setValueTextSize(10f);
+        set.setDrawValues(false);
+        //set.setValueTextColor(Color.BLACK);
+        //set.setValueTextSize(10f);
 
         return set;
     }
